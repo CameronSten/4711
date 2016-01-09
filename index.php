@@ -8,7 +8,8 @@
     <body>
         <?php
             $position = $_GET['board'];
-            $game = new Game($positions);
+            $game = new Game($position);
+            $game->display();
             if($game->winner('x')) {
                 echo 'You Win.';
             } else if($game->winner('o')){
@@ -59,6 +60,32 @@ class Game {
        
         return $won;
     }
+    function display() {
+        echo '<table cols=”3” style=”font­size:large; font­weight:bold”>';
+        echo '<tr>'; // open the first row
+        for ($pos=0; $pos<9;$pos++) {
+            echo $this->show_cell($pos);
+            if ($pos %3 == 2){
+                echo '</tr><tr>'; // start a new row for the next square
+            }
+        }
+        echo '</tr>'; // close the last row
+        echo '</table>';
+    }
+    
+    function show_cell($which) {
+        $token = $this->position[$which];
+        if ($token <> '­') {
+            return '<td>'.$token.'</td>';
+        }
+        $this->newposition = $this->position;
+        $this->newposition[$which] = 'o'; // this would be their move
+        $move = implode($this->newposition); 
+        $link = '/?board='.$move; // this is what we want the link to be
+
+        return '<td><a href=”'.$link.'”>­</a></td>';
+}
+
 }
 
 
