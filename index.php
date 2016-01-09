@@ -10,6 +10,14 @@
             $position = $_GET['board'];
             $squares = str_split($positions);
             
+            if(!isset($_GET('board')))
+            {
+                echo 'No board ';
+            } else 
+            {
+                echo 'board is set';
+            }
+            
             if(winner('x', $squares)) 
             {
                 echo 'You win.';
@@ -70,7 +78,6 @@ function winner($token, $position) {
         
         return $won;
     }
-?>
 
 
 
