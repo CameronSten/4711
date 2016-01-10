@@ -75,17 +75,21 @@ class Game {
     
     function show_cell($which) {
         $token = $this->position[$which];
-        if ($token <> '­') {
+        if ($token <> '-') {
             return '<td>'.$token.'</td>';
         }
         $this->newposition = $this->position;
-        $this->newposition[$which] = 'o'; // this would be their move
+        $this->newposition[$which] = 'x'; // this would be their move
         $move = implode($this->newposition); 
+        echo $move;
         $link = '/?board='.$move; // this is what we want the link to be
 
-        return '<td><a href=”'.$link.'”>­</a></td>';
-}
+        return '<td><a href='.$link.'>-</a></td>';
+    }
 
+    function pick_move($which) {
+        
+    }
 }
 
 
