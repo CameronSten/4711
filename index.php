@@ -9,6 +9,7 @@
         <?php
             $position = $_GET['board'];
             $game = new Game($position);
+            $game->pick_move();
             $game->display();
             if($game->winner('x')) {
                 echo 'You Win.';
@@ -21,14 +22,39 @@
     </body>
 </html>
 <?php
-
+/*
+ * class Game
+ * attributes position = the game board
+ * 
+ * functions __construct = the constructor for the game board
+ *           winner = checks if a player has won the game
+ *           display = displays the game board in a table
+ *           show_cell = allows the user to pick a move
+ *           pick_move = the computer player picks its move
+ * 
+ * this class is the game, it handles all moves, decides a winner 
+ * and displays the game board
+ */
 class Game {
     var $position;
-    
+    /*
+     * function __construct
+     * parameters the string to build the game board from
+     * return none
+     * 
+     * creates the game, with a displayable game board
+     */
     function __construct($squares){
         $this->position = str_split($squares);
     }
-    
+    /*
+     * function winner
+     * parameters which player has won
+     * return if they won
+     * 
+     * this function checks if either x or o has won yet
+     * checking each posibility and then returning the result
+     */
     function winner($token) {
         $won = false;
         
@@ -60,6 +86,16 @@ class Game {
        
         return $won;
     }
+    /*
+     * function display
+     * parameters none
+     * return none
+     * 
+     * this function handles the display of the board
+     * calling the show_cell function on each cell on 
+     * the board and displaying it in a neat html
+     * table
+     */
     function display() {
         echo '<table cols=”3” style=”font­size:large; font­weight:bold”>';
         echo '<tr>'; // open the first row
@@ -72,7 +108,15 @@ class Game {
         echo '</tr>'; // close the last row
         echo '</table>';
     }
-    
+    /*
+     * function show_cell
+     * parameters the cell to show
+     * return the link to the new board
+     * 
+     * this function has 2 purposes
+     * it displays the contents of a cell
+     * and allows the user to choose their move
+     */
     function show_cell($which) {
         $token = $this->position[$which];
         if ($token <> '-') {
@@ -81,14 +125,31 @@ class Game {
         $this->newposition = $this->position;
         $this->newposition[$which] = 'x'; // this would be their move
         $move = implode($this->newposition); 
-        echo $move;
         $link = '/?board='.$move; // this is what we want the link to be
 
         return '<td><a href='.$link.'>-</a></td>';
     }
-
-    function pick_move($which) {
+    /*
+     * function pick_move
+     * parameters none
+     * return true
+     * 
+     * this function controls the computer player
+     * picks a random square that does not have a 
+     * x or o and chooses that as its move.
+     */
+    function pick_move() {
+        while(true){
+            $which = rand(0,8);
+            $token = $this->position[$which];
+            if($token == '-') {
+                break;
+            }
+        }
         
+        $this->position[$which] = 'o';
+        
+        return true;
     }
 }
 
