@@ -23,6 +23,16 @@
 </html>
 <?php
 /*
+ *********************
+ * Cameron Stenmark
+ * A00885373
+ * COMP 4711
+ * Lab 1
+ ********************* 
+ */
+
+
+/*
  * class Game
  * attributes position = the game board
  * 
